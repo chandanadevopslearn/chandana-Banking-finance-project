@@ -14,11 +14,9 @@ node {
         tagName = "1.0"
     }
     stage ('code checkout'){
-        try{
         echo 'pulling the code from github repo'
         git 'https://github.com/kondetimounika80/banking-finance.git'
         }
-    }
     stage('Build the application'){
         echo 'clean and compile and test package'
         //sh 'mvn clean package'
@@ -28,7 +26,6 @@ node {
         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/StrarAgileDevopsPipeline/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report Staragile/var/lib/jenkins/workspace/StrarAgileDevopsPipeline', reportTitles: '', useWrapperFileDirectly: true])
     }
     stage('Build the DockerImage of the application'){
-        try{
         echo 'creating the docker image'
 		// if you get permission denied issue
         //sudo usermod -a -G docker jenkins
@@ -38,7 +35,7 @@ node {
         sh "${dockerCMD} build -t kondetimounika/finance-me:${tagName} ."
         
         }
-    }
+    
     stage('push the docker image to dockerhub'){
         echo 'pushing docker image'
         withCredentials([string(credentialsId: 'docker-password', variable: 'DockerPassword')]) {
