@@ -18,15 +18,6 @@ node {
         echo 'pulling the code from github repo'
         git 'https://github.com/kondetimounika80/banking-finance.git'
         }
-        catch(Exception e){
-            echo 'Exception Occur'
-            currentBuild.result = "FAILURE"
-            emailext body: '''Hello Staragile Deveops
-
-            The Build Number ${BUILD_NUMBER} is Failed. Please look into that.
-
-            Thanks,''', subject: 'The jenkis Job ${JOB_NAME} is Failed ', to: 'niladrimondal.mondal@gmail.com'
-        }
     }
     stage('Build the application'){
         echo 'clean and compile and test package'
@@ -46,16 +37,6 @@ node {
         //jenkins ALL=(ALL) NOPASSWD:ALL
         sh "${dockerCMD} build -t kondetimounika/finance-me:${tagName} ."
         
-        }
-        catch(Exception e){
-            echo 'Exception Occur'
-            currentBuild.result = "FAILURE"
-            emailext body: '''Hello Staragile Deveops
-
-            The Build Number ${BUILD_NUMBER} is Failed. Please look into that.
-
-            Thanks,''', subject: 'The jenkis Job ${JOB_NAME} is Failed ', to: 'niladrimondal.mondal@gmail.com'
-            
         }
     }
     stage('push the docker image to dockerhub'){
