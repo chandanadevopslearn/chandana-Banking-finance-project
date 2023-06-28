@@ -1,5 +1,5 @@
 node{
-    stage('git checjout')
+    stage('git checkout')
     {
         git branch: 'master', url: 'https://github.com/kondetimounika80/banking-finance.git'
     }
